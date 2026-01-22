@@ -12,7 +12,12 @@ jobs:
         
       - name: verify image
         run: docker images
-        
+      - name: create container
+        run: docker run -name python.app -itd -p 8080:8080 ${{ vars.DOCKER_USERNAME }}/helloworld-demo-python_suri:v1
+      - name: view container
+        run: docker ps
+      - name: curl output
+        run: curl http://localhost:8080
       - name: Docker Login
         uses: docker/login-action@v3.6.0
         with:
