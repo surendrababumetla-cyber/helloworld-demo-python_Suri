@@ -1,31 +1,35 @@
-name: docker-ci-pipeline
+name: Docker-Ci-PipeLine
 on: push
 jobs:
   dockerci-job:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Code Checkout
-        uses: actions/checkout@v6 
-      - name: Build Image
-        run: docker build -t ${{ vars.DOCKER_USERNAME }}/helloworld-demo-python_suri:v1 . 
-      - name: verify image
-        run: docker images
+        uses: actions/checkout@v6
+      - name: Build image
+        run: sudo docker build -t ${{ vars.DOCKER_USERNAME }}/helloworld-demo-python_suri:v1 .
+      - name: Verify Image
+        run: sudo docker images
+
       - name: create container
-        run: docker run -name python.app -itd -p 8080:8080 ${{ vars.DOCKER_USERNAME }}/helloworld-demo-python_suri:v1 .
-      - name: sleep
-        run: sleep 20
+        run: docker run  --name pythonapp -itd -p 8080:8080 ${{ vars.DOCKER_USERNAME }}/helloworld-demo-python_suri:v1 .
+      -  name: sleep
+         run: sleep 20
+
       - name: view container
         run: docker ps
-      - name: curl output
-        run: curl http://localhost:8080
+
+      - name: check output
+        run: curl -f http://localhost:8080
+
       - name: Docker Login
         uses: docker/login-action@v3.6.0
         with:
-         username: ${{ vars.DOCKER_USERNAME }}
-         password: ${{ secrets.DOCKER_TOKEN }}  
-      - name: push Image
-        run: docker push ${{ vars.DOCKER_USERNAME }}/helloworld-demo-python_suri:v1
-      - name: stop container cleanup
-        run: docker rm -f python -app
-        
-          
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_SECRET }}
+ 
+      - name: push image
+        run: docker push ${{ vars.DOCKER_USERNAME }}/az-helloworld-demo-py:v1
+ 
+      - name: container cleanup
+        run: docker rm -f pythonapp
