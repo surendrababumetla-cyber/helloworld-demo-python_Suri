@@ -41,12 +41,11 @@ jobs:
       - name: apply yaml-files
         run: |
           kubectl apply -f k8s/.
-          kubectl config set-context --current --namespace=surendra-pyhton-app
           kubectl wait --for=condition=ready pod -l app=hello-world
       - name: get-status-deployments
         run: |
           kubectl get ns
-          kubectl get deploy,service -n surendra-pyhton-app
+          kubectl get deploy,service
       - name: Test service URLs
         run: |
           minikube service list
