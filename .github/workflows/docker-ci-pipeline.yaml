@@ -22,7 +22,7 @@ jobs:
       - name: check output
         run: curl -f http://localhost:8080
   
-      - continue-on-error: 
+      - continue-on-error:
       - name: Docker Login
         uses: docker/login-action@v3.6.0
         with:
