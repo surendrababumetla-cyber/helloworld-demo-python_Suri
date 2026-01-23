@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world
+  namespace: surendra-pyhton-app
+  labels:
+    app: hello-world
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: hello-world
+      name: surendra
+  template:
+    metadata:
+      labels:
+        app: hello-world
+    spec:
+      containers:
+      - name: surendra
+        image: surendrababu4a7/helloworld-demo-python_suri:v1
+        ports:
+        - containerPort: 8080
