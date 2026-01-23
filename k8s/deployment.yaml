@@ -9,7 +9,6 @@ spec:
   selector:
     matchLabels:
       app: hello-world
-      name: surendra
   template:
     metadata:
       labels:
