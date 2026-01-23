@@ -1,4 +1,4 @@
 apiVersion: v1
-kind: surendra-namespace
+kind: namespace
 metadata:
-  name: pyhton-app
+  name: surendra-pyhton-app
